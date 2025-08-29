@@ -1,4 +1,4 @@
-FROM postgres:14.2
+FROM postgres:14.11
 
 RUN buildDeps='git make gcc postgresql-server-dev-14 clang-11' \
 		&& apt update && apt install -y $buildDeps --no-install-recommends --reinstall ca-certificates \
@@ -9,4 +9,4 @@ RUN buildDeps='git make gcc postgresql-server-dev-14 clang-11' \
 		&& apt purge -y --auto-remove $buildDeps
 
 EXPOSE 5432
-CMD docker-entrypoint.sh postgres
+CMD ["docker-entrypoint.sh", "postgres"]
