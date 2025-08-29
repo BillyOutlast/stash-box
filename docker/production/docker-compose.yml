@@ -1,16 +1,12 @@
-version: '3.8'
-
 services:
   postgres:
     container_name: postgres
     build: ./postgres
     restart: always
-    environment:
-      POSTGRES_USER: <USER>
-      POSTGRES_PASSWORD: <PASSWORD>
-      POSTGRES_DB: <DATABASE>
+    env_file:
+      - .env
     volumes:
-      - /pgdata:/var/lib/postgresql/data
+      - ./pgdata:/var/lib/postgresql/data
 
   stash-box:
     container_name: stash-box
@@ -24,7 +20,7 @@ services:
     links:
       - postgres
     volumes:
-      - <CONFIG_DIR>:/root/.stash-box
+      - ./config:/root/.stash-box
     labels:
       - traefik.http.routers.stash-box.rule=Host(`<DOMAIN>`)
       - traefik.http.routers.stash-box.tls=true

@@ -62,3 +62,4 @@ stash-box-config.yml
 
 # TODO - we'll add this in later
 vendor
+docker/production/.env
