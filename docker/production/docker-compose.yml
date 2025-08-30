@@ -7,6 +7,8 @@ services:
       - .env
     volumes:
       - ./pgdata:/var/lib/postgresql/data
+    security_opt:
+      - "label=disable"
 
   stash-box:
     container_name: stash-box
@@ -21,11 +23,15 @@ services:
       - postgres
     volumes:
       - ./config:/root/.stash-box
+    ports:
+      - "9998:9998"
     labels:
       - traefik.http.routers.stash-box.rule=Host(`<DOMAIN>`)
       - traefik.http.routers.stash-box.tls=true
       - traefik.http.routers.stash-box.tls.certresolver=stash-box
       - traefik.port=9998
+    security_opt:
+      - "label=disable"
 
   traefik:
     container_name: traefik
@@ -46,3 +52,5 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /traefik/acme.json:/acme.json
+    security_opt:
+      - "label=disable"
